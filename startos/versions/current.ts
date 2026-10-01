@@ -1,23 +1,23 @@
 import { IMPOSSIBLE, VersionInfo } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '1.0.11277:0',
+  version: '1.0.11312:0',
   releaseNotes: {
-    en_US: `Updated llama.cpp to build b11277. The embeddings API now accepts typed vision, audio, and video content. Improves model loading speed and Intel Vulkan performance. Fixes incorrect Vulkan results when matrix multiplication reads a slice of a larger cache and JSON-schema responses with Muse Glimmer.
+    en_US: `Updated llama.cpp to build b11312. Adds support for GLM-5.3-Flash models. Fixes out-of-bounds GPU memory writes with IQ4_NL models on NVIDIA and AMD GPUs, and integer overflows when parsing GGUF model files.
 
-Full commit range: https://github.com/ggml-org/llama.cpp/compare/b11223...b11277`,
-    es_ES: `Actualiza llama.cpp a la compilación b11277. La API de embeddings ahora acepta contenido tipado de imagen, audio y vídeo. Mejora la velocidad de carga de modelos y el rendimiento de Vulkan en Intel. Corrige resultados incorrectos de Vulkan cuando la multiplicación de matrices lee una sección de una caché más grande y las respuestas con esquema JSON de Muse Glimmer.
+Full commit range: https://github.com/ggml-org/llama.cpp/compare/b11277...b11312`,
+    es_ES: `Actualiza llama.cpp a la compilación b11312. Añade compatibilidad con los modelos GLM-5.3-Flash. Corrige escrituras fuera de límites en la memoria de la GPU con modelos IQ4_NL en GPU NVIDIA y AMD, y desbordamientos de enteros al analizar archivos de modelo GGUF.
 
-Rango completo de commits: https://github.com/ggml-org/llama.cpp/compare/b11223...b11277`,
-    de_DE: `Aktualisiert llama.cpp auf Build b11277. Die Embeddings-API akzeptiert jetzt typisierte Bild-, Audio- und Videoinhalte. Verbessert die Ladegeschwindigkeit von Modellen und die Vulkan-Leistung auf Intel-GPUs. Behebt falsche Vulkan-Ergebnisse beim Lesen eines Ausschnitts aus einem größeren Cache durch eine Matrixmultiplikation sowie JSON-Schema-Antworten mit Muse Glimmer.
+Rango completo de commits: https://github.com/ggml-org/llama.cpp/compare/b11277...b11312`,
+    de_DE: `Aktualisiert llama.cpp auf Build b11312. Fügt Unterstützung für GLM-5.3-Flash-Modelle hinzu. Behebt Schreibzugriffe außerhalb der Grenzen des GPU-Speichers bei IQ4_NL-Modellen auf NVIDIA- und AMD-GPUs sowie Ganzzahlüberläufe beim Einlesen von GGUF-Modelldateien.
 
-Vollständiger Commit-Bereich: https://github.com/ggml-org/llama.cpp/compare/b11223...b11277`,
-    pl_PL: `Aktualizuje llama.cpp do kompilacji b11277. API embeddings przyjmuje teraz typowane treści obrazu, dźwięku i wideo. Przyspiesza ładowanie modeli i poprawia wydajność Vulkan na układach Intel. Naprawia błędne wyniki Vulkan, gdy mnożenie macierzy odczytuje fragment większej pamięci podręcznej, oraz odpowiedzi zgodne ze schematem JSON w Muse Glimmer.
+Vollständiger Commit-Bereich: https://github.com/ggml-org/llama.cpp/compare/b11277...b11312`,
+    pl_PL: `Aktualizuje llama.cpp do kompilacji b11312. Dodaje obsługę modeli GLM-5.3-Flash. Naprawia zapisy poza granicami pamięci GPU przy modelach IQ4_NL na kartach NVIDIA i AMD oraz przepełnienia liczb całkowitych podczas parsowania plików modeli GGUF.
 
-Pełny zakres commitów: https://github.com/ggml-org/llama.cpp/compare/b11223...b11277`,
-    fr_FR: `Met à jour llama.cpp vers la compilation b11277. L'API des embeddings accepte désormais les contenus typés image, audio et vidéo. Accélère le chargement des modèles et améliore les performances Vulkan sur Intel. Corrige des résultats Vulkan incorrects lorsque la multiplication matricielle lit une partie d'un cache plus grand ainsi que les réponses conformes à un schéma JSON avec Muse Glimmer.
+Pełny zakres commitów: https://github.com/ggml-org/llama.cpp/compare/b11277...b11312`,
+    fr_FR: `Met à jour llama.cpp vers la compilation b11312. Ajoute la prise en charge des modèles GLM-5.3-Flash. Corrige des écritures hors limites dans la mémoire GPU avec les modèles IQ4_NL sur les GPU NVIDIA et AMD, ainsi que des dépassements d'entiers lors de l'analyse des fichiers de modèle GGUF.
 
-Plage complète des commits : https://github.com/ggml-org/llama.cpp/compare/b11223...b11277`,
+Plage complète des commits : https://github.com/ggml-org/llama.cpp/compare/b11277...b11312`,
   },
   migrations: {
     up: async ({ effects }) => {},
