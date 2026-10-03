@@ -148,7 +148,7 @@ Generates the password for the API and chat UI.
 Removes one downloaded model to reclaim disk.
 
 - **What it changes:** deletes the chosen `models--<org>--<repo>` folder from `/data/models` — every quantization downloaded from that repo goes with it. The form lists the cached repos with their size on disk, plus any loose `*.gguf` files left by older builds; it never takes a free-form path.
-- **The model in use cannot be deleted.** The repo named by `-hf` in `serveArgs` is disabled in the form and refused if submitted: llama-server holds it open, so the space would not come back until a restart, and the restart would download it again. Switch models with Set Model first.
+- **Models in use cannot be deleted.** The main and speculative draft repos configured in `serveArgs` are disabled in the form and refused if submitted. Repeated HuggingFace options use the last value, matching llama-server. llama-server holds these models open, so the space would not come back until a restart, and the restart would download them again. Switch models with Set Model first.
 - **Repeat safety:** fails with an error if the chosen model is no longer in the cache, rather than reporting success.
 - **Outputs:** the repo removed and the space freed.
 - **Not reversible**, but not destructive either — the model is re-downloaded if selected again.

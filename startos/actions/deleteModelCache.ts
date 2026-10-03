@@ -59,24 +59,39 @@ async function listCache(): Promise<{ name: string; bytes: number }[]> {
   return entries
 }
 
-// The cache folder of the configured model. llama-server keeps it open, so
-// deleting it would free nothing until a restart, which downloads it again.
-async function inUseEntry(): Promise<string | null> {
+// Cache folders of the configured main and draft models, last flag winning
+// as in llama-server. It keeps them open, so deleting one would free nothing
+// until a restart, which downloads it again.
+async function inUseEntries(): Promise<Set<string>> {
   const serveArgs = (await storeJson.read((s) => s?.serveArgs).once()) ?? []
-  const i = serveArgs.findIndex((a) => ['-hf', '-hfr', '--hf-repo'].includes(a))
-  const repo = i >= 0 ? serveArgs[i + 1]?.split(':')[0] : undefined
-  return repo ? repoPrefix + repo.replaceAll('/', '--') : null
+  const repoOptions = [
+    ['-hf', '-hfr', '--hf-repo'],
+    ['--spec-draft-hf', '-hfd', '-hfrd', '--hf-repo-draft'],
+  ]
+  const repos = new Map<number, string>()
+  for (let i = 0; i < serveArgs.length; i++) {
+    const model = repoOptions.findIndex((flags) => flags.includes(serveArgs[i]))
+    if (model < 0) continue
+    const repo = serveArgs[++i]?.split(':')[0]
+    if (repo) repos.set(model, repo)
+  }
+  return new Set(
+    Array.from(
+      repos.values(),
+      (repo) => repoPrefix + repo.replaceAll('/', '--'),
+    ),
+  )
 }
 
 const inputSpec = InputSpec.of({
   model: Value.dynamicSelect(async () => {
     const entries = await listCache()
-    const inUse = await inUseEntry()
+    const inUse = await inUseEntries()
     const values: Record<string, string> = {}
     for (const { name, bytes } of entries) {
       values[name] = `${entryLabel(name)} (${formatBytes(bytes)})`
     }
-    const deletable = entries.filter((e) => e.name !== inUse)
+    const deletable = entries.filter((e) => !inUse.has(e.name))
     return {
       name: i18n('Cached model'),
       description:
@@ -87,7 +102,10 @@ const inputSpec = InputSpec.of({
           : i18n('The model cache is empty.'),
       values,
       default: deletable[0]?.name ?? '',
-      disabled: inUse && inUse in values ? [inUse] : false,
+      disabled:
+        entries.length > deletable.length
+          ? entries.filter((e) => inUse.has(e.name)).map((e) => e.name)
+          : false,
     }
   }),
 })
@@ -118,7 +136,7 @@ export const deleteModelCache = sdk.Action.withInput(
     if (!entry) {
       throw new Error(i18n('That model is no longer in the cache.'))
     }
-    if (name === (await inUseEntry())) {
+    if ((await inUseEntries()).has(name)) {
       throw new Error(
         i18n(
           'This model is currently in use. Switch to another model with "Set Model" first.',
