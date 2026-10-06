@@ -48,6 +48,7 @@ export default {
     43: 'Este modelo está en uso. Cambie primero a otro modelo con «Establecer modelo».',
     44: 'Modelo eliminado',
     45: 'Se eliminó ${model} y se liberaron ${size}.',
+    46: 'Ese modelo descargado ya no está en la caché.',
   },
   de_DE: {
     0: 'Starte llama.cpp!',
@@ -96,6 +97,7 @@ export default {
     43: 'Dieses Modell wird gerade verwendet. Wechseln Sie zuerst mit „Modell festlegen“ zu einem anderen Modell.',
     44: 'Modell gelöscht',
     45: '${model} entfernt, ${size} freigegeben.',
+    46: 'Dieses heruntergeladene Modell ist nicht mehr im Cache.',
   },
   pl_PL: {
     0: 'Uruchamianie llama.cpp!',
@@ -144,6 +146,7 @@ export default {
     43: 'Ten model jest obecnie używany. Najpierw przełącz się na inny model za pomocą akcji „Ustaw model”.',
     44: 'Model usunięty',
     45: 'Usunięto ${model}, zwalniając ${size}.',
+    46: 'Tego pobranego modelu nie ma już w pamięci podręcznej.',
   },
   fr_FR: {
     0: 'Démarrage de llama.cpp !',
@@ -192,5 +195,6 @@ export default {
     43: 'Ce modèle est en cours d’utilisation. Passez d’abord à un autre modèle avec « Définir le modèle ».',
     44: 'Modèle supprimé',
     45: '${model} supprimé, ${size} libérés.',
+    46: 'Ce modèle téléchargé n’est plus dans le cache.',
   },
 } satisfies Record<string, LangDict>

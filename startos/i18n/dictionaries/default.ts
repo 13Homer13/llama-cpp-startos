@@ -28,6 +28,7 @@ const dict = {
   'Extra arguments': 19,
   'Additional `llama-server` flags, space-separated. Advanced — split on whitespace, so quoted values will not survive.': 20,
   Custom: 21,
+  'That downloaded model is no longer in the cache.': 46,
 
   // model preset labels
   'Llama 3.2 1B Instruct': 22,
