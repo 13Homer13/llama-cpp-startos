@@ -13,7 +13,7 @@ const customVariant = {
     hfRepo: Value.text({
       name: i18n('HuggingFace repo'),
       description: i18n(
-        'A HuggingFace GGUF repo, optionally with a quant tag (e.g. `unsloth/Qwen2.5-7B-Instruct-GGUF:Q4_K_M`).',
+        'A HuggingFace GGUF repo, optionally with a quant tag (e.g. unsloth/Qwen2.5-7B-Instruct-GGUF:Q4_K_M).',
       ),
       required: true,
       default: null,
@@ -53,7 +53,7 @@ const customVariant = {
     extraArgs: Value.text({
       name: i18n('Extra arguments'),
       description: i18n(
-        'Additional `llama-server` flags, space-separated. Advanced — split on whitespace, so quoted values will not survive.',
+        'Additional llama-server flags, space-separated. Advanced — split on whitespace, so quoted values will not survive.',
       ),
       required: false,
       default: null,
@@ -88,6 +88,14 @@ const inputSpec = InputSpec.of({
       models.find((m) => memoryGB >= m.minMemoryGB)?.id ?? 'custom'
     return {
       name: i18n('Configuration'),
+      description: [
+        i18n("Presets too large for this server's memory are disabled."),
+        ...models.map(
+          (m) =>
+            `- ${i18n(m.displayName)}: ${i18n('needs about ${memory} GB of memory', { memory: m.minMemoryGB })}`,
+        ),
+        `- ${i18n('Custom')}: ${i18n('any HuggingFace GGUF model, with your own context size, GPU layers and server flags')}`,
+      ].join('\n'),
       variants: Variants.of(allVariants),
       default: defaultId as AllVariantIds,
       disabled: disabledIds.length > 0 ? disabledIds : false,

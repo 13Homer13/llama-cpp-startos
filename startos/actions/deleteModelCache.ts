@@ -101,7 +101,7 @@ const inputSpec = InputSpec.of({
             )
           : i18n('The model cache is empty.'),
       values,
-      default: deletable[0]?.name ?? '',
+      default: null,
       disabled:
         entries.length > deletable.length
           ? entries.filter((e) => inUse.has(e.name)).map((e) => e.name)

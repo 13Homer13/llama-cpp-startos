@@ -18,15 +18,23 @@ Freshly scaffolded? Work the
 guide page, not a file in this repo — read it, don't copy it in.
 
 Keep `README.md` (technical reference for an AI support or administering agent) and
-`instructions.md` (end-user docs) in sync with your changes.
+`instructions.md` (end-user docs) in sync with your changes. This file restates neither:
+whoever changes the package has both, so it carries only what they don't — repo mechanics,
+a change that looks right and is not, where the next thing gets added, a naming trap, a
+build or test invocation particular to this repo.
 
-**Bugs and feature requests are GitHub issues on this repo** — file them as you find them.
+**Fix a defect you spot rather than reporting it** — you have the package open and the
+context to be sure. File **a GitHub issue on this repo** only when the call isn't yours to
+make: you can't pin the cause down, two defensible fixes exist, or it's too large to ride on
+the work in hand. An open issue is a report, not a queue — implement one when you're asked
+to or when it's labelled `Approved`, then close it with `Closes #<n>`.
+
 Don't record work in the repo instead: no `TODO.md`, no `NOTES.md`, no `PLAN.md`. What you
 verified, tried, and decided belongs in the commit message and the PR body.
 
 ## This repo
 
-- **One repo, four builds.** `VARIANT` (see the `Makefile` targets) selects the image, architectures, and `hardwareRequirements` for `generic`, `nvidia`, `rocm`, and `vulkan`. Bump `upstreamBuild` once in `startos/manifest/index.ts` and every variant follows.
-- **The AMD matcher is a positive allowlist of discrete product names, not an iGPU exclusion.** StartOS's regex engine has no lookahead, and ROCm is unreliable on integrated Radeon — so a broad `amdgpu` match would route Ryzen APUs onto a build that does not work for them.
-- **The one-hour grace period on the health check is the model download.** Don't shorten it to something that looks more like a health check.
-- **Preset sizing reads VRAM where it can and system memory otherwise** (`startos/hardware.ts`), and the result is cached per process. `minMemoryGB` in `actions/presets.ts` is weights plus roughly 25% for the KV cache — keep that convention when adding a preset.
+- **One repo, four builds.** `VARIANT` (the `Makefile` targets) selects the image, architectures and `hardwareRequirements` for `generic`, `nvidia`, `rocm` and `vulkan`. Bump `upstreamBuild` in `startos/manifest/index.ts` once; every variant follows.
+- **Don't widen the AMD matcher to a bare `amdgpu` match.** ROCm fails on integrated Radeon, and StartOS's regex engine has no lookahead to exclude them, so it stays a positive allowlist of discrete product names.
+- **Don't shorten the health check's one-hour grace period.** It covers the model download on first start.
+- **New presets go in `startos/actions/presets.ts`**, with `minMemoryGB` set to the weights plus roughly 25% for the KV cache.
