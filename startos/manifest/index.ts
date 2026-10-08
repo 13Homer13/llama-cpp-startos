@@ -12,12 +12,14 @@ const imageConfigs = {
   generic: {
     source: { dockerTag: `ghcr.io/ggml-org/llama.cpp:server-${upstreamBuild}` },
     arch: ['aarch64', 'x86_64'],
+    emulateMissing: false,
   },
   nvidia: {
     source: {
       dockerTag: `ghcr.io/ggml-org/llama.cpp:server-cuda-${upstreamBuild}`,
     },
     arch: ['aarch64', 'x86_64'],
+    emulateMissing: false,
     nvidiaContainer: true,
   },
   rocm: {
@@ -25,12 +27,14 @@ const imageConfigs = {
       dockerTag: `ghcr.io/ggml-org/llama.cpp:server-rocm-${upstreamBuild}`,
     },
     arch: ['x86_64'],
+    emulateMissing: false,
   },
   vulkan: {
     source: {
       dockerTag: `ghcr.io/ggml-org/llama.cpp:server-vulkan-${upstreamBuild}`,
     },
     arch: ['aarch64', 'x86_64'],
+    emulateMissing: false,
   },
 } as const
 
@@ -99,5 +103,4 @@ export const manifest = setupManifest({
   hardwareRequirements: {
     device: [...(hwDevices[variant as keyof typeof hwDevices] ?? [])],
   },
-  dependencies: {},
 })

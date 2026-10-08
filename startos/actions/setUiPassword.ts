@@ -12,9 +12,11 @@ export const setUiPassword = sdk.Action.withoutInput(
     description: i18n(
       'Generate a new password for logging in to the llama.cpp web UI. The username is always "admin".',
     ),
-    warning: i18n(
-      'This replaces any existing password. Update saved logins after running it.',
-    ),
+    warning: (await storeJson.read((s) => s?.uiPassword).const(effects))
+      ? i18n(
+          'This replaces any existing password. Update saved logins after running it.',
+        )
+      : null,
     allowedStatuses: 'any',
     group: null,
     visibility: 'enabled',
@@ -30,15 +32,16 @@ export const setUiPassword = sdk.Action.withoutInput(
 
     return {
       version: '1',
-      title: 'UI Password',
-      message:
+      title: i18n('UI Password'),
+      message: i18n(
         'Use these credentials to log in to the llama.cpp web UI in your browser.',
+      ),
       result: {
         type: 'group',
         value: [
           {
             type: 'single',
-            name: 'Username',
+            name: i18n('Username'),
             description: null,
             value: uiUsername,
             masked: false,
@@ -47,7 +50,7 @@ export const setUiPassword = sdk.Action.withoutInput(
           },
           {
             type: 'single',
-            name: 'Password',
+            name: i18n('Password'),
             description: null,
             value: password,
             masked: true,

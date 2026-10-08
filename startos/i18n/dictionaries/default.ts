@@ -18,7 +18,7 @@ const dict = {
   'Changing the model will restart the service and may require downloading a new model.': 9,
   Configuration: 10,
   'HuggingFace repo': 11,
-  'A HuggingFace GGUF repo, optionally with a quant tag (e.g. `unsloth/Qwen2.5-7B-Instruct-GGUF:Q4_K_M`).': 12,
+  'A HuggingFace GGUF repo, optionally with a quant tag (e.g. unsloth/Qwen2.5-7B-Instruct-GGUF:Q4_K_M).': 12,
   'HuggingFace file (optional)': 13,
   'Specific GGUF filename inside the repo. Leave empty to let llama-server pick.': 14,
   'Context size': 15,
@@ -26,8 +26,11 @@ const dict = {
   'GPU layers': 17,
   'Number of model layers to offload to GPU. Use a large value (e.g. 999) to offload everything; ignored on the generic CPU variant.': 18,
   'Extra arguments': 19,
-  'Additional `llama-server` flags, space-separated. Advanced — split on whitespace, so quoted values will not survive.': 20,
+  'Additional llama-server flags, space-separated. Advanced — split on whitespace, so quoted values will not survive.': 20,
   Custom: 21,
+  "Presets too large for this server's memory are disabled.": 46,
+  'needs about ${memory} GB of memory': 47,
+  'any HuggingFace GGUF model, with your own context size, GPU layers and server flags': 48,
 
   // model preset labels
   'Llama 3.2 1B Instruct': 22,
@@ -56,6 +59,10 @@ const dict = {
   'Set UI Password': 36,
   'Generate a new password for logging in to the llama.cpp web UI. The username is always "admin".': 37,
   'This replaces any existing password. Update saved logins after running it.': 38,
+  'UI Password': 49,
+  'Use these credentials to log in to the llama.cpp web UI in your browser.': 50,
+  Username: 51,
+  Password: 52,
 
   // init/initializeService.ts
   'Generate a password to log in to the llama.cpp web UI': 39,

@@ -131,7 +131,7 @@ Chooses what the server runs — either a curated preset or a model of your own.
 - **Cost:** seconds to write, then a restart — and, if the model is not already cached, a download that can take a long time.
 - **Repeat safety:** safe to re-run. Switching back to a previously used model is fast, because the old one is still cached.
 - **The form reopens on your current selection**, read back from `modelSelection`, so changing one setting does not mean re-entering the rest. With nothing chosen yet it falls back to the hardware-filtered default.
-- **Presets are filtered to your hardware.** The form reads the accelerator's memory — VRAM on NVIDIA and ROCm, system memory otherwise — and disables any preset that would not fit, defaulting to the smallest that does. The estimate is the quantized weights plus roughly a quarter for the context cache.
+- **Presets are filtered to your hardware.** The form reads the accelerator's memory — VRAM on NVIDIA and ROCm, system memory otherwise — and disables any preset that would not fit, defaulting to the smallest that does. The field's help text lists every preset with the memory it needs. The estimate is the quantized weights plus roughly a quarter for the context cache.
 - **Custom** takes a HuggingFace GGUF repo, optionally a specific file, a context size, a GPU-layer count, and extra server flags. Those extra flags are split on whitespace, so a quoted value with spaces will not survive.
 
 ### Set UI Password
@@ -140,14 +140,14 @@ Generates the password for the API and chat UI.
 
 - **What it changes:** `uiPassword` in `store.json`, and through it the binding's basic-auth credential.
 - **Cost:** seconds, then a restart.
-- **Repeat safety:** safe to re-run, but it **replaces** the existing password — every saved client login has to be updated.
+- **Repeat safety:** safe to re-run, but it **replaces** the existing password — every saved client login has to be updated. When a password already exists it asks for confirmation first; the first run does not.
 - **Outputs:** the username `admin` and the new password.
 
 ### Delete Model Cache
 
 Removes one downloaded model to reclaim disk.
 
-- **What it changes:** deletes the chosen `models--<org>--<repo>` folder from `/data/models` — every quantization downloaded from that repo goes with it. The form lists the cached repos with their size on disk, plus any loose `*.gguf` files left by older builds; it never takes a free-form path.
+- **What it changes:** deletes the chosen `models--<org>--<repo>` folder from `/data/models` — every quantization downloaded from that repo goes with it. The form lists the cached repos with their size on disk, plus any loose `*.gguf` files left by older builds; it never takes a free-form path, and nothing is preselected.
 - **Models in use cannot be deleted.** The main and speculative draft repos configured in `serveArgs` are disabled in the form and refused if submitted. Repeated HuggingFace options use the last value, matching llama-server. llama-server holds these models open, so the space would not come back until a restart, and the restart would download them again. Switch models with Set Model first.
 - **Repeat safety:** fails with an error if the chosen model is no longer in the cache, rather than reporting success.
 - **Outputs:** the repo removed and the space freed.
